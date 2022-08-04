@@ -3,6 +3,7 @@ package com.usian.admin.service;
 import com.usian.model.admin.dtos.ChannelDto;
 import com.usian.model.admin.pojos.AdChannel;
 import com.usian.model.common.dtos.ResponseResult;
+import io.swagger.annotations.ApiOperation;
 
 public interface AdChannelService {
     /**
@@ -28,5 +29,11 @@ public interface AdChannelService {
      * @return
      */
     public ResponseResult save(AdChannel adChannel);
+    /**
+     * 根据id查询频道信息
+     * @param id
+     * @return
+     */
+    public ResponseResult findByIdChannel(Integer id);
 }
 

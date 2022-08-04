@@ -1,7 +1,6 @@
 package com.usian.admin;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.usian.model.admin.pojos.AdChannel;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

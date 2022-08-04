@@ -18,7 +18,7 @@ import javax.ws.rs.POST;
  * @create: 2022-08-03 16:09
  **/
 @RestController
-@RequestMapping("/admin/api/v1/channel")
+@RequestMapping("/api/v1/channel")
 public class AdChannelController implements AdChannelControllerApi {
     @Autowired
     private AdChannelService adChannelService;
@@ -30,14 +30,14 @@ public class AdChannelController implements AdChannelControllerApi {
     }
 
     @Override
-    @DeleteMapping("/del/{id}")
+    @GetMapping("/del/{id}")
     public ResponseResult deleteById(@PathVariable Integer id) {
         //获取到id 进行删除
         return adChannelService.deleteById(id);
     }
 
     @Override
-    @PutMapping("update")
+    @PostMapping("/update")
     public ResponseResult update(@RequestBody AdChannel adChannel) {
         //通过json格式进行传输数据
 
@@ -45,8 +45,14 @@ public class AdChannelController implements AdChannelControllerApi {
     }
 
     @Override
-    @PostMapping("save")
+    @PostMapping("/save")
     public ResponseResult save(@RequestBody AdChannel adChannel) {
         return adChannelService.save(adChannel);
+    }
+
+    @Override
+    @GetMapping("/findByIdChannel/{id}")
+    public ResponseResult findByIdChannel(@PathVariable Integer id) {
+        return adChannelService.findByIdChannel(id);
     }
 }

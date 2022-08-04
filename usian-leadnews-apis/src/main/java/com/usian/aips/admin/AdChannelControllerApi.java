@@ -40,4 +40,12 @@ public interface AdChannelControllerApi {
      */
     @ApiOperation(value = "添加频道",notes = "根据传入参数添加频道信息")
     public ResponseResult save(AdChannel adChannel);
+
+    /**
+     * 根据id查询频道信息
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "根据id查询频道",notes = "根据id查询频道信息")
+    public ResponseResult findByIdChannel(Integer id);
 }
