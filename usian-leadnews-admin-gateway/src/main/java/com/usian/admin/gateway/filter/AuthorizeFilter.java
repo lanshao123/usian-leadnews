@@ -47,13 +47,14 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
             Claims claimsBody = AppJwtUtil.getClaimsBody(jwtToken);
             //判断是否过期
             int result = AppJwtUtil.verifyToken(claimsBody);
-            log.info("token过期状态:111111",result);
+            log.info("token过期状态:",result);
             //先获取到载荷里面的id 用来做刷新token
             Integer id =  (Integer)claimsBody.get("id");
             if(result==-1){
                 //这个情况是token小于5分钟需要刷新token
                 String token = AppJwtUtil.getToken(id.longValue());
                 log.info("刷新token:{}",token);
+                //刷新玩把token存到响应头里面 返回给前端处理
                 response.getHeaders().set("refresh_token", token);
                 return chain.filter(exchange);
             }

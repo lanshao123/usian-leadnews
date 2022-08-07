@@ -10197,3 +10197,34 @@ Unconditional classes:
 2022-08-07 21:04:26.774 [RMI TCP Connection(2)-192.168.31.24] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 9 ms
 2022-08-07 21:04:26.869 [parallel-1] INFO  io.lettuce.core.EpollProvider - Starting without optional epoll library
 2022-08-07 21:04:26.871 [parallel-1] INFO  io.lettuce.core.KqueueProvider - Starting without optional kqueue library
+2022-08-07 21:14:50.100 [Thread-45] DEBUG o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@34dc85a, started on Sun Aug 07 21:04:14 CST 2022, parent: org.springframework.context.annotation.AnnotationConfigApplicationContext@acdb094
+2022-08-07 21:14:50.103 [Thread-45] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2022-08-07 21:14:50.103 [Thread-45] INFO  o.s.s.quartz.SchedulerFactoryBean - Shutting down Quartz Scheduler
+2022-08-07 21:14:50.103 [Thread-45] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2022-08-07 21:14:50.103 [Thread-45] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2022-08-07 21:14:50.103 [Thread-45] INFO  org.quartz.core.QuartzScheduler - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2022-08-07 21:14:50.104 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Archaius' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Nacos-discovery' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Auditevents' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Beans' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Caches' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Health' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Conditions' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Configprops' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Env' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Info' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Loggers' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Threaddump' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Metrics' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Scheduledtasks' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Httptrace' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Mappings' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Refresh' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Features' from the JMX domain
+2022-08-07 21:14:50.105 [Thread-45] DEBUG o.s.b.a.e.jmx.JmxEndpointExporter - Unregister endpoint with ObjectName 'org.springframework.boot:type=Endpoint,name=Service-registry' from the JMX domain
+2022-08-07 21:14:50.106 [Thread-45] INFO  c.a.c.n.r.NacosServiceRegistry - De-registering from Nacos Server now...
+2022-08-07 21:14:50.109 [Thread-45] INFO  c.a.c.n.r.NacosServiceRegistry - De-registration finished.
+2022-08-07 21:14:50.111 [Thread-45] INFO  o.s.j.e.a.AnnotationMBeanExporter - Could not unregister MBean [com.github.tobato.fastdfs.domain.conn:name=fdfsConnectionPool,type=FdfsConnectionPool] as said MBean is not registered (perhaps already unregistered by an external process)
+2022-08-07 21:14:50.111 [Thread-45] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+2022-08-07 21:14:51.229 [Thread-45] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2022-08-07 21:14:51.235 [Thread-45] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
