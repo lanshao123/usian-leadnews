@@ -47,7 +47,7 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
             Claims claimsBody = AppJwtUtil.getClaimsBody(jwtToken);
             //判断是否过期
             int result = AppJwtUtil.verifyToken(claimsBody);
-            log.info("token过期状态:",result);
+            log.info("token过期状态dev分支:",result);
             //先获取到载荷里面的id 用来做刷新token
             Integer id =  (Integer)claimsBody.get("id");
             if(result==-1){
