@@ -8,6 +8,7 @@ import com.usian.model.common.dtos.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 
@@ -24,7 +25,9 @@ public class AdChannelController implements AdChannelControllerApi {
     private AdChannelService adChannelService;
     @Override
     @PostMapping("/list")
-    public ResponseResult findByNameAndPage(@RequestBody ChannelDto channelDto) {
+    public ResponseResult findByNameAndPage(@RequestBody ChannelDto channelDto,HttpServletRequest request) {
+        System.out.println(request);
+        System.out.println(request.getHeader("token"));
         //获取到前端传递过来的参数 通过json 传递 对象
         return adChannelService.findByNameAndPage(channelDto);
     }

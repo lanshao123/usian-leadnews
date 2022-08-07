@@ -3,7 +3,12 @@ package com.usian.password.test;
 import com.usian.utils.common.BCrypt;
 import com.usian.utils.common.MD5Utils;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.Test;
 import org.springframework.util.DigestUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MD5Test {
 
@@ -24,6 +29,13 @@ public class MD5Test {
         System.out.println(gensalt);
         String password = BCrypt.hashpw("123456", gensalt);  //根据盐对密码进行加密
         System.out.println(password);//加密后的字符串前29位就是盐*/
+        //
+        //     int i = "id".hashCode();
+        //     System.out.println(i^(i>>>16));
+        // HashMap map=new HashMap<>();
+        //     map.put();
+        // ArrayList arrayList=new ArrayList();
+        // arrayList.remove()
 
 
         String abc = MD5Utils.encodeWithSalt("admin", "123abc");

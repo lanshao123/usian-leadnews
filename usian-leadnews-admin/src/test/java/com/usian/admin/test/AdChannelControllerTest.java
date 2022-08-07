@@ -43,4 +43,6 @@ public class AdChannelControllerTest {
         mockMvc.perform(post).andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
 
     }
+
+
 }

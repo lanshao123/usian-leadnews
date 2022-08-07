@@ -12,6 +12,9 @@ import com.usian.model.common.dtos.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @program: usian-leadnews
  * @description: AdChannelServiceController
@@ -26,6 +29,7 @@ public class AdSensitiveController implements AdSensitiveControllerApi {
     @Override
     @PostMapping("/list")
     public ResponseResult findByNameAndPage(@RequestBody SensitiveDto sensitiveDto) {
+
         return adSensitiveService.findByNameAndPage(sensitiveDto);
     }
 

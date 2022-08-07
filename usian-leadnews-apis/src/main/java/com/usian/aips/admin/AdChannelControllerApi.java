@@ -7,6 +7,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Api(value = "频道管理",tags = "channel",description = "频道管理API")
 public interface AdChannelControllerApi {
     /**
@@ -15,7 +17,7 @@ public interface AdChannelControllerApi {
      */
     @ApiOperation(value = "查询频道信息",notes = "根据名称分页查询频道列表")
     @ApiImplicitParam(value = "查询名称") //name = "channelDto",type = "ChannelDto",
-    public ResponseResult findByNameAndPage(ChannelDto channelDto);
+    public ResponseResult findByNameAndPage(ChannelDto channelDto, HttpServletRequest request);
 
     /**
      * 根据id 删除频道

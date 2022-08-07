@@ -9,7 +9,7 @@ import java.util.*;
 public class AppJwtUtil {
 
     // TOKEN的有效期一天（S）
-    private static final int TOKEN_TIME_OUT = 3_600;
+    private static final int TOKEN_TIME_OUT = 350;
     // 加密KEY
     private static final String TOKEN_ENCRY_KEY = "MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY";
     // 最小刷新间隔(S)
@@ -83,7 +83,7 @@ public class AppJwtUtil {
             claims.getExpiration()
                     .before(new Date());
             // 需要自动刷新TOKEN
-            if((claims.getExpiration().getTime()-System.currentTimeMillis())>REFRESH_TIME*1000){
+            if((claims.getExpiration().getTime()-System.currentTimeMillis())<REFRESH_TIME*1000){
                 return -1;
             }else {
                 return 0;
@@ -110,8 +110,10 @@ public class AppJwtUtil {
        /* Map map = new HashMap();
         map.put("id","11");*/
         System.out.println(AppJwtUtil.getToken(1102L));
-        Jws<Claims> jws = AppJwtUtil.getJws("eyJhbGciOiJIUzUxMiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAADWLQQqEMAwA_5KzhURNt_qb1KZYQSi0wi6Lf9942NsMw3zh6AVW2DYmDGl2WabkZgreCaM6VXzhFBfJMcMARTqsxIG9Z888QLui3e3Tup5Pb81013KKmVzJTGo11nf9n8v4nMUaEY73DzTabjmDAAAA.4SuqQ42IGqCgBai6qd4RaVpVxTlZIWC826QA9kLvt9d-yVUw82gU47HDaSfOzgAcloZedYNNpUcd18Ne8vvjQA");
+        Jws<Claims> jws = AppJwtUtil.getJws("eyJhbGciOiJIUzUxMiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAADWLQQrDMAzA_uJzA3WaeGl_4642pLARcAIbY3-fe9hNQugDZ6-wAd13RU0pLCtLSIocCqIGyUU0R16EIkxQucOGlFe65RlpAhu73_a2Lo-rm7kOq_x043G4cWvO8mr_s9B1Vm-Ic_z-ACNUkteDAAAA.yMa-G8JKkjlqGO6ubingEaIM-PIJtqvPVzcHb4ANMQY0qOJS_TA3I_dUqKMDSe9a7WwKwjO_DP6Xztl47nLKFA");
         Claims claims = jws.getBody();
+        int i = verifyToken(claims);
+        System.out.println(i);
         System.out.println(claims.get("id"));
 
     }
