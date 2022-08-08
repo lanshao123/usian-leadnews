@@ -2,9 +2,14 @@ package com.usian.admin.controller.v1;
 
 import com.usian.admin.service.AdChannelService;
 import com.usian.aips.admin.AdChannelControllerApi;
+import com.usian.common.web.admin.AdminTokenFilter;
 import com.usian.model.admin.dtos.ChannelDto;
 import com.usian.model.admin.pojos.AdChannel;
+import com.usian.model.admin.pojos.AdUser;
 import com.usian.model.common.dtos.ResponseResult;
+import com.usian.utils.threadlocal.AdminThreadLocalUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,13 +26,15 @@ import javax.ws.rs.POST;
 @RestController
 @RequestMapping("/api/v1/channel")
 public class AdChannelController implements AdChannelControllerApi {
+    Logger logger = LoggerFactory.getLogger(AdChannelController.class);
+
     @Autowired
     private AdChannelService adChannelService;
     @Override
     @PostMapping("/list")
-    public ResponseResult findByNameAndPage(@RequestBody ChannelDto channelDto,HttpServletRequest request) {
-        System.out.println(request);
-        System.out.println(request.getHeader("token"));
+    public ResponseResult findByNameAndPage(@RequestBody ChannelDto channelDto) {
+        AdUser user = AdminThreadLocalUtils.getUser();
+        logger.info("从当前线程中获取到对象:{}",user.toString());
         //获取到前端传递过来的参数 通过json 传递 对象
         return adChannelService.findByNameAndPage(channelDto);
     }

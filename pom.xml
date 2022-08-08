@@ -15,6 +15,7 @@
         <module>usian-leadnews-model</module>
         <module>usian-leadnews-admin</module>
         <module>usian-leadnews-admin-gateway</module>
+        <module>usian-leadnews-user</module>
     </modules>
 
     <!-- 继承Spring boot工程 -->
