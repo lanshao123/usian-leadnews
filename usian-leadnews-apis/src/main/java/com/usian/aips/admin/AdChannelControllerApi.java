@@ -17,7 +17,7 @@ public interface AdChannelControllerApi {
      */
     @ApiOperation(value = "查询频道信息",notes = "根据名称分页查询频道列表")
     @ApiImplicitParam(value = "查询名称") //name = "channelDto",type = "ChannelDto",
-    public ResponseResult findByNameAndPage(ChannelDto channelDto, HttpServletRequest request);
+    public ResponseResult findByNameAndPage(ChannelDto channelDto);
 
     /**
      * 根据id 删除频道

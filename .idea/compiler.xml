@@ -7,12 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="usian-leadnews-admin-gateway" />
+        <module name="usian-leadnews-admin" />
+        <module name="usian-leadnews-user" />
         <module name="usian-leadnews-apis" />
         <module name="usian-leadnews-common" />
         <module name="usian-leadnews-utils" />
-        <module name="usian-leadnews-admin-gateway" />
         <module name="usian-leadnews-model" />
-        <module name="usian-leadnews-admin" />
       </profile>
     </annotationProcessing>
   </component>
@@ -23,6 +24,7 @@
       <module name="usian-leadnews-apis" options="-parameters" />
       <module name="usian-leadnews-common" options="-parameters" />
       <module name="usian-leadnews-model" options="-parameters" />
+      <module name="usian-leadnews-user" options="-parameters" />
       <module name="usian-leadnews-utils" options="-parameters" />
     </option>
   </component>

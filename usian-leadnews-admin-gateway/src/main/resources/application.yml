@@ -20,9 +20,16 @@ spring:
               - DELETE
       routes:
         # 平台管理
-        - id: admin
+        - id: leadnews-admin
           uri: lb://leadnews-admin
           predicates:
             - Path=/admin/**
+          filters:
+            - StripPrefix= 1
+        # 平台管理
+        - id: leadnews-user
+          uri: lb://leadnews-user
+          predicates:
+            - Path=/user/**
           filters:
             - StripPrefix= 1

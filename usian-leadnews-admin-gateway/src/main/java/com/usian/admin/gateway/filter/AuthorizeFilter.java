@@ -1,5 +1,6 @@
 package com.usian.admin.gateway.filter;
 
+import com.google.common.collect.Maps;
 import com.usian.admin.gateway.utils.AppJwtUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.log4j.Log4j2;
@@ -13,6 +14,9 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @program: usian-leadnews
@@ -45,7 +49,7 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
         try {
             //获取载荷
             Claims claimsBody = AppJwtUtil.getClaimsBody(jwtToken);
-            //判断是否过期
+          /*  //判断是否过期
             int result = AppJwtUtil.verifyToken(claimsBody);
             log.info("token过期状态:",result);
             //先获取到载荷里面的id 用来做刷新token
@@ -58,11 +62,10 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
                 response.getHeaders().set("refresh_token", token);
                 return chain.filter(exchange);
             }
-
-            log.info("通过请求头获取到token中的id:{}",id);
+            log.info("通过请求头获取到token中的id:{}",id);*/
             //直接携带token放行
             request.mutate().header("token",jwtToken);
-            request.mutate().header("id",id+"");
+            //request.mutate().header("id",id+"");
             return chain.filter(exchange);
         } catch (Exception e) {
             e.printStackTrace();
