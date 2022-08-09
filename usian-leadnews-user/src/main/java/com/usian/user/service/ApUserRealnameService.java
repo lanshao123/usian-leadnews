@@ -25,4 +25,19 @@ public interface ApUserRealnameService extends IService<ApUserRealname> {
      * @return
      */
     public ResponseResult AutoUpdateStatus(AuthDto dto);
+
+
+    /**
+     * 人工实名，通过接口
+     * @param dto
+     * @return
+     */
+    public ResponseResult authFail(AuthDto dto,Short passAuth);
+    /**
+     * 人工实名，失败接口
+     * @param dto
+     * @return
+     */
+    public ResponseResult authPass(AuthDto dto, Short passAuth);
+
 }

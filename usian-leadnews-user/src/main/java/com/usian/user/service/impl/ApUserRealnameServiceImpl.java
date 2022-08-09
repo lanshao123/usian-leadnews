@@ -17,6 +17,7 @@ import com.usian.user.utils.YongyouHttpApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,10 +29,6 @@ import java.util.Map;
  **/
 @Service
 public class ApUserRealnameServiceImpl extends ServiceImpl<ApUserRealnameMapper, ApUserRealname> implements ApUserRealnameService {
-
-    @Autowired
-    private ApUserRealnameService apUserRealnameService;
-
     @Override
     public ResponseResult loadListByStatus(AuthDto dto) {
         //根据状态来查询 用户实名列表
@@ -51,6 +48,11 @@ public class ApUserRealnameServiceImpl extends ServiceImpl<ApUserRealnameMapper,
         return result;
     }
 
+    /**
+     * 实名认证 自动接口
+     * @param dto
+     * @return
+     */
     @Override
     public ResponseResult AutoUpdateStatus(AuthDto dto) {
         boolean falg=true;
@@ -143,13 +145,11 @@ public class ApUserRealnameServiceImpl extends ServiceImpl<ApUserRealnameMapper,
                     Map cmap1 = (Map) cMap.get("data");
                     String score = (String) cmap1.get("score");
                     double parseDouble = Double.parseDouble(score);
-                    System.out.println();
                     if (ccode.equals("601200000") && parseDouble >= 10.00) {
                         System.out.println("人证核验成功审核成功");
                     } else {
                         falg=false;
                     }
-
                 } else {
                     falg=false;
                 }
@@ -160,7 +160,6 @@ public class ApUserRealnameServiceImpl extends ServiceImpl<ApUserRealnameMapper,
             falg=false;
         }
         if(falg){
-            System.out.println("人证核验成功审核成功");
             byId.setStatus((short) 9);
             this.updateById(byId);
             return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
@@ -172,5 +171,61 @@ public class ApUserRealnameServiceImpl extends ServiceImpl<ApUserRealnameMapper,
         }
 
         return null;
+    }
+
+    @Override
+    /**
+     * 人工实名审核驳回接口
+     */
+    public ResponseResult authFail(AuthDto dto, Short passAuth) {
+        //进行参数校验
+        if(dto==null){
+            ExceptionCast.cast(1,"参数非法");
+        }
+        if(dto.getId()==null){
+            ExceptionCast.cast(1,"id非法");
+        }
+        ApUserRealname realname = this.getById(dto.getId());
+        if(realname==null){
+            ExceptionCast.cast(1,"用户不存在");
+        }
+        if(!realname.getStatus().equals((short)1)){
+            ExceptionCast.cast(1,"不是待审核状态");
+        }
+        if(dto.getMsg()==null){
+            ExceptionCast.cast(1,"参数非法");
+        }
+        realname.setStatus(passAuth);
+        realname.setReason(dto.getMsg());
+        realname.setUpdatedTime(new Date());
+        //进行人工审核通过 修改状态
+        this.updateById(realname);
+        return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
+    }
+
+    @Override
+    /**
+     * 人工实名审核通过接口
+     */
+    public ResponseResult authPass(AuthDto dto, Short passAuth) {
+        //进行参数校验
+        if(dto==null){
+            ExceptionCast.cast(1,"参数非法");
+        }
+        if(dto.getId()==null){
+            ExceptionCast.cast(1,"id非法");
+        }
+        ApUserRealname realname = this.getById(dto.getId());
+        if(realname==null){
+            ExceptionCast.cast(1,"用户不存在");
+        }
+        if(!realname.getStatus().equals((short) 1)){
+            ExceptionCast.cast(1,"不是待审核状态");
+        }
+        realname.setStatus(passAuth);
+        realname.setUpdatedTime(new Date());
+        //进行人工审核通过 修改状态
+        this.updateById(realname);
+        return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
     }
 }

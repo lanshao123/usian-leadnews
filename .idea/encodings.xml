@@ -5,10 +5,12 @@
     <file url="file://$PROJECT_DIR$/usian-leadnews-admin-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/usian-leadnews-admin/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/usian-leadnews-apis/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/usian-leadnews-article/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/usian-leadnews-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/usian-leadnews-model/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/usian-leadnews-user/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/usian-leadnews-utils/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/usian-leadnews-wemedia/src/main/java" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
