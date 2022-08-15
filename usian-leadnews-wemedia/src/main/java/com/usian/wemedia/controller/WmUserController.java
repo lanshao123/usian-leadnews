@@ -6,10 +6,12 @@ import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.common.enums.AppHttpCodeEnum;
 import com.usian.model.media.pojos.WmUser;
 import com.usian.wemedia.service.WmUserService;
+import org.jcodings.util.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.POST;
+import java.util.HashMap;
 import java.util.List;
 
 /**

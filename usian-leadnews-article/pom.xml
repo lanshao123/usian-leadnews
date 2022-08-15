@@ -15,6 +15,10 @@
         <!-- 引入依赖模块 -->
         <dependency>
             <groupId>com.wh</groupId>
+            <artifactId>usian-leadnews-seata</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.wh</groupId>
             <artifactId>usian-leadnews-model</artifactId>
         </dependency>
         <dependency>

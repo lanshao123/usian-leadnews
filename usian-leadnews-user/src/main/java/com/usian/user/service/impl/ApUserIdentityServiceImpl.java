@@ -19,6 +19,7 @@ import com.usian.user.mapper.ApUserRealnameMapper;
 import com.usian.user.service.ApUserIdentityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -49,6 +50,8 @@ public class ApUserIdentityServiceImpl extends ServiceImpl<ApUserIdentityMapper,
      * @return
      */
     @Override
+    //lobalTransactional
+    @Transactional
     public ResponseResult updateStatus(AuthDto dto, Short status) {
         //这是管理员手动审核的接口
         if (dto==null||dto.getId()==null) {
@@ -81,15 +84,16 @@ public class ApUserIdentityServiceImpl extends ServiceImpl<ApUserIdentityMapper,
         //开始进行身份认证
         //修改identity表数据
         apUserIdentity.setStatus(status);
-        apUserIdentity.setUpdatedTime(new Date());
+       apUserIdentity.setUpdatedTime(new Date());
         this.updateById(apUserIdentity);
+        //identityMapper.updateIdentitystatus(apUserIdentity.getId(),status);
         //然后创建自媒体账号 以及作者账号
         ResponseResult wmUserAndAuthor = createWmUserAndAuthor(apUserIdentity);
         if(wmUserAndAuthor!=null){
             ExceptionCast.cast(1,"创建自媒体and作者失败");
         }
         //首先创建自媒体
-
+        //int i=1/0;
         return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
     }
 
