@@ -12,6 +12,10 @@
     <artifactId>usian-leadnews-user</artifactId>
     <dependencies>
         <!-- 引入依赖模块 -->
+<!--        <dependency>-->
+<!--            <groupId>com.wh</groupId>-->
+<!--            <artifactId>usian-leadnews-seata</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.wh</groupId>
             <artifactId>usian-leadnews-model</artifactId>
@@ -24,6 +28,7 @@
             <groupId>com.wh</groupId>
             <artifactId>usian-leadnews-apis</artifactId>
         </dependency>
+
         <!-- Spring boot starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -38,6 +43,15 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

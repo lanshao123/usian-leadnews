@@ -3,7 +3,7 @@ package com.usian.common.exception;
 import com.google.common.collect.ImmutableMap;
 import com.usian.model.common.dtos.ResponseResult;
 import lombok.extern.log4j.Log4j2;
-import org.omg.CORBA.PUBLIC_MEMBER;
+import org.springframework.http.InvalidMediaTypeException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
