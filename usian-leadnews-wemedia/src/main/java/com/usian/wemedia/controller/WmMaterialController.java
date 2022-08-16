@@ -22,8 +22,9 @@ public class WmMaterialController implements MaterialManageControllerApi {
     private WmMaterialService wmMaterialService;
     @Override
     @RequestMapping("/upload_picture")
-    public ResponseResult uploadPicture(@RequestPart MultipartFile multipartFile) {
-        return  wmMaterialService.uploadPicture(multipartFile);
+    public ResponseResult uploadPicture(@RequestPart MultipartFile multipartFile,@RequestParam("type")Integer type) {
+        System.out.println(type);
+        return  wmMaterialService.uploadPicture(multipartFile,type);
     }
 
     @Override

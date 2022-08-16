@@ -35,5 +35,7 @@ public interface AdChannelService {
      * @return
      */
     public ResponseResult findByIdChannel(Integer id);
+
+    ResponseResult list();
 }
 

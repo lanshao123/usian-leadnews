@@ -50,4 +50,10 @@ public interface AdChannelControllerApi {
      */
     @ApiOperation(value = "根据id查询频道",notes = "根据id查询频道信息")
     public ResponseResult findByIdChannel(Integer id);
+    /**
+     * 查询所有频道
+     * @return
+     */
+    @ApiOperation(value = "查询所有频道",notes = "查询所有频道")
+    public ResponseResult findAll();
 }
