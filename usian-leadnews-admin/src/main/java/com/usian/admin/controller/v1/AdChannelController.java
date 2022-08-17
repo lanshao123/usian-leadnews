@@ -65,4 +65,10 @@ public class AdChannelController implements AdChannelControllerApi {
     public ResponseResult findByIdChannel(@PathVariable Integer id) {
         return adChannelService.findByIdChannel(id);
     }
+
+    @Override
+    @GetMapping("/channels")
+    public ResponseResult findAll() {
+        return adChannelService.list();
+    }
 }

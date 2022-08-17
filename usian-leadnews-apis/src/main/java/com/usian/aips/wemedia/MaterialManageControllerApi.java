@@ -3,6 +3,7 @@ package com.usian.aips.wemedia;
 import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.media.dtos.WmMaterialDto;
 import io.swagger.annotations.Api;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -19,7 +20,7 @@ public interface MaterialManageControllerApi {
      * @param multipartFile
      * @return
      */
-    ResponseResult uploadPicture(MultipartFile multipartFile);
+    ResponseResult uploadPicture(MultipartFile multipartFile,Integer type);
     /**
      * 素材列表
      * @param dto

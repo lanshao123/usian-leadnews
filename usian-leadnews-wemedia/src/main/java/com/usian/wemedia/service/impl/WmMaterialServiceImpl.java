@@ -4,27 +4,32 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.usian.common.contants.wemedia.WemediaContans;
 import com.usian.common.exception.ExceptionCast;
 import com.usian.common.fastdfs.FastDFSClientUtil;
 import com.usian.model.common.dtos.PageResponseResult;
 import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.common.enums.AppHttpCodeEnum;
 import com.usian.model.media.dtos.WmMaterialDto;
+import com.usian.model.media.dtos.WmNewsDto;
 import com.usian.model.media.pojos.WmMaterial;
+import com.usian.model.media.pojos.WmNews;
 import com.usian.model.media.pojos.WmNewsMaterial;
 import com.usian.model.media.pojos.WmUser;
 import com.usian.utils.threadlocal.WmThreadLocalUtils;
+import com.usian.wemedia.config.QiNiuUtil;
 import com.usian.wemedia.mapper.WmMaterialMapper;
 import com.usian.wemedia.mapper.WmNewsMaterialMapper;
 import com.usian.wemedia.service.WmMaterialService;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -43,14 +48,34 @@ public class WmMaterialServiceImpl extends ServiceImpl<WmMaterialMapper, WmMater
     @Autowired
     private WmNewsMaterialMapper wmNewsMaterialMapper;
     @Override
-    public ResponseResult uploadPicture(MultipartFile file)  {
+    public ResponseResult uploadPicture(MultipartFile file,Integer type)  {
         //上传判断参数
         if(file==null){
             ExceptionCast.cast(1,"参数不正确");
         }
         String str=null;
         try {
+            //只上传fastdfs
             str= fastDFSClientUtil.uploadFile(file);
+            //str= fastDFSClientUtil.uploadFile(file);
+            // String originalFilename = file.getOriginalFilename();
+            // newFileName = UUID.randomUUID() + originalFilename.substring(originalFilename.lastIndexOf("."));
+            // switch (type){
+            //     case 1:
+            //         str= fastDFSClientUtil.uploadFile(file);
+            //         uurl=url+str;
+            //         break;
+            //     case 2:
+            //         break;
+            //     case 3:
+            //         boolean b = QiNiuUtil.uploadMultipartFile(file, newFileName, true);
+            //         uurl="http://rgoty2n9l.hb-bkt.clouddn.com/"+newFileName;
+            //         break;
+            //     default:
+            //         ExceptionCast.cast(1,"参数不正确");
+            //         break;
+            // }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -121,6 +146,18 @@ public class WmMaterialServiceImpl extends ServiceImpl<WmMaterialMapper, WmMater
         //删除fastdfs图片
         try {
             fastDFSClientUtil.delFile(one.getUrl());
+        /*    if(one.getUrl().contains("clouddn")){
+                //七牛云删除
+                String replace = one.getUrl().replace("http://rgoty2n9l.hb-bkt.clouddn.com/", "");
+                String s = QiNiuUtil.deleteUrl(replace);
+                System.out.println(s);
+                System.out.println("七牛云删除");
+            }else{
+                String replace = one.getUrl().replace("http://192.168.211.132:8080/", "");
+                System.out.println(replace);
+                fastDFSClientUtil.delFile(replace);
+            }*/
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -149,4 +186,6 @@ public class WmMaterialServiceImpl extends ServiceImpl<WmMaterialMapper, WmMater
         this.updateById(one);
         return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
     }
+
+
 }

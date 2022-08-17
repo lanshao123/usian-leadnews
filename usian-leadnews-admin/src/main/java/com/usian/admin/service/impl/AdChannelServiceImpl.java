@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @program: usian-leadnews
@@ -117,5 +118,14 @@ public class AdChannelServiceImpl implements AdChannelService {
             return ResponseResult.errorResult(AppHttpCodeEnum.DATA_NOT_EXIST);
         }
         return ResponseResult.okResult(adChannel);
+    }
+
+    @Override
+    public ResponseResult list() {
+        LambdaQueryWrapper<AdChannel> queryWrapper=new LambdaQueryWrapper<>();
+        queryWrapper.eq(AdChannel::getStatus,1);
+        queryWrapper.orderByAsc(AdChannel::getOrd);
+        List<AdChannel> adChannels = adChannelMapper.selectList(queryWrapper);
+        return ResponseResult.okResult(adChannels);
     }
 }
