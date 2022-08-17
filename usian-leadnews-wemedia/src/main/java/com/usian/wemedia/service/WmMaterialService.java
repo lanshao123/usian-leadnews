@@ -3,6 +3,7 @@ package com.usian.wemedia.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.media.dtos.WmMaterialDto;
+import com.usian.model.media.dtos.WmNewsDto;
 import com.usian.model.media.pojos.WmMaterial;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,4 +36,5 @@ public interface WmMaterialService extends IService<WmMaterial> {
      * @return
      */
     ResponseResult isCollection(Integer id,Short collection);
+
 }

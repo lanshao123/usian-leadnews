@@ -1,6 +1,7 @@
 package com.usian.aips.wemedia;
 
 import com.usian.model.common.dtos.ResponseResult;
+import com.usian.model.media.dtos.WmNewsDto;
 import com.usian.model.media.dtos.WmNewsPageReqDto;
 import io.swagger.annotations.Api;
 
@@ -12,5 +13,27 @@ public interface WmNewsControllerApi {
      * @return
      */
     public ResponseResult findAll(WmNewsPageReqDto wmNewsPageReqDto);
+    /**
+     * 提交文章
+     * @param wmNews
+     * @return
+     */
+    ResponseResult submitNews(WmNewsDto wmNews);
+    /**
+     * 根据id获取文章信息
+     * @return
+     */
+    ResponseResult findWmNewsById(Integer id);
+    /**
+     * 删除文章
+     * @return
+     */
+    ResponseResult delNews(Integer id);
+    /**
+     * 上下架
+     * @param dto
+     * @return
+     */
+    ResponseResult downOrUp(WmNewsDto dto);
 
 }
