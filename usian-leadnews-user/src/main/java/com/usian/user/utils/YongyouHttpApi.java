@@ -9,15 +9,15 @@ package com.usian.user.utils;
 public class YongyouHttpApi {
     //orc
     public final static String OCRURL="https://api.yonyoucloud.com/apis/dst/IdcardOCR/IdcardOCR";
-    public final static String OCRCODE="8c9dd2f101b344bab1ae3b27ecabe1a5";
+    public final static String OCRCODE="7f14078b20104b6b97310530523e730d";
     //身份证二要素
     public final static String MATCHIDENTITY ="https://api.yonyoucloud.com/apis/dst/matchIdentity/matchIdentity";
-    public final static String MATCHIDENTITYCODE="ec3249d5539d4e94a0d26f8a6e0b6db7";
+    public final static String MATCHIDENTITYCODE="6b8904be890b4df4b38907148956d330";
     //活体检测
     public final static String BIOLOGICALEXAMINATION ="https://api.yonyoucloud.com/apis/dst/Biologicalexamination/Biologicalexamination";
-    public final static String BIOLOGICALEXAMINATIONCODE="392211c086c6402ca0a56a10cda1d683";
+    public final static String BIOLOGICALEXAMINATIONCODE="2b95623c656546babc0e1b25610c8643";
     //人证核验
     public final static String COMPARISONSOFPERSONSANDDOCUMENTS ="https://api.yonyoucloud.com/apis/dst/ComparisonsofPersonsandDocuments/ComparisonsofPersonsandDocuments";
-    public final static String COMPARISONSOFPERSONSANDDOCUMENTSCODE="b285b7b8d5874f4fb70b35ebddf0b15c";
+    public final static String COMPARISONSOFPERSONSANDDOCUMENTSCODE="42d55f732bc14ec8a61ba4e0ba4cdffb";
 
 }

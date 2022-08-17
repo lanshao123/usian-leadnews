@@ -3,6 +3,8 @@ package com.usian.utils.threadlocal;
 
 import com.usian.model.admin.pojos.AdUser;
 
+import java.util.ArrayList;
+
 public class AdminThreadLocalUtils {
 
     private final  static ThreadLocal<AdUser> userThreadLocal = new ThreadLocal<>();

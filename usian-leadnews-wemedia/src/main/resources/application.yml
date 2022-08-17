@@ -8,6 +8,9 @@ spring:
       discovery:
         namespace: d0442d84-d7d4-40dc-a3b9-eb46435f39c7
         server-addr: 127.0.0.1:8848
+    alibaba:
+      seata:
+        tx-service-group: leadnews-wemedia_tx_group
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.211.132:3306/leadnews_wemedia?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
@@ -22,3 +25,6 @@ mybatis-plus:
     map-underscore-to-camel-case: false  #是否关闭驼峰到下划线的映射
     cache-enabled: false  #是否开启二级缓存
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #打印sql语句
+#图片访问ip
+fdfs:
+  url: http://192.168.211.132:8080/
