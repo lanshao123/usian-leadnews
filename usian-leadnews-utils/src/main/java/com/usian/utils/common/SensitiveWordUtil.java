@@ -104,6 +104,7 @@ public class SensitiveWordUtil {
                     wordMap.put(word, 1);
                 }
 
+
                 i += wordLength - 1;
             }
         }

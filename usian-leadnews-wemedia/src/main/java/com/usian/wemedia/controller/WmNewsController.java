@@ -2,6 +2,7 @@ package com.usian.wemedia.controller;
 
 import com.usian.aips.wemedia.WmNewsControllerApi;
 import com.usian.model.common.dtos.ResponseResult;
+import com.usian.model.common.enums.AppHttpCodeEnum;
 import com.usian.model.media.dtos.WmNewsDto;
 import com.usian.model.media.dtos.WmNewsPageReqDto;
 import com.usian.model.media.pojos.WmNews;
@@ -54,5 +55,18 @@ public class WmNewsController implements WmNewsControllerApi {
     @Override
     public ResponseResult downOrUp(@RequestBody WmNewsDto dto) {
         return wmNewsService.downOrUp(dto);
+    }
+
+    @Override
+    @GetMapping("/findOne/{id}")
+    public WmNews findById(@PathVariable("id") Integer id) {
+        return wmNewsService.getById(id);
+    }
+
+    @Override
+    @PostMapping("/update")
+    public ResponseResult updateWmNews(@RequestBody WmNews wmNews) {
+         wmNewsService.updateById(wmNews);
+        return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
     }
 }

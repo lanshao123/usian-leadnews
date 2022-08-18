@@ -71,7 +71,7 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
         IPage<WmNews> iPage = this.page(new Page<>(dto.getPage(), dto.getSize()), queryWrapper);
         ResponseResult responseResult = new PageResponseResult(dto.getPage(), dto.getSize(), (int) iPage.getTotal());
         responseResult.setData(iPage.getRecords());
-        responseResult.setHost(url);
+        //responseResult.setHost(url);
         return responseResult;
     }
 

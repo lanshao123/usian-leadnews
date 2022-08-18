@@ -3,6 +3,7 @@ package com.usian.aips.article;
 import com.usian.model.article.pojos.ApAuthor;
 import com.usian.model.common.dtos.ResponseResult;
 import io.swagger.annotations.Api;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Api(value = "作者管理",tags = "author",description = "作者管理API")
 public interface AuthorControllerApi {
@@ -19,4 +20,10 @@ public interface AuthorControllerApi {
      * @return
      */
      ResponseResult save(ApAuthor apAuthor);
+    /**
+     * 根据名称查询作者
+     * @param name
+     * @return
+     */
+    public ApAuthor findByName(@PathVariable("name") String name);
 }

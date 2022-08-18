@@ -41,4 +41,10 @@ public class WmUserController implements WmUserControllerApi {
         }
         return null;
     }
+
+    @Override
+    @GetMapping("/findOne/{id}")
+    public WmUser findById(@PathVariable("id") Integer id) {
+        return wmUserService.getById(id);
+    }
 }

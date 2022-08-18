@@ -46,4 +46,12 @@ public class ApAuthorController implements AuthorControllerApi {
         //已经修改了用户是自媒体，然后身份认证也通过了，创建了自媒体，创建了作者，最后报错了测试
         return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
     }
+
+    @Override
+    @GetMapping("/findByName/{name}")
+    public ApAuthor findByName(@PathVariable("name") String name) {
+        //根据name查询作者信息
+        ApAuthor one = apAuthorService.getOne(Wrappers.<ApAuthor>lambdaQuery().eq(ApAuthor::getName, name));
+        return one;
+    }
 }

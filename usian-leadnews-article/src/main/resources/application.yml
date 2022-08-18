@@ -25,3 +25,6 @@ mybatis-plus:
     map-underscore-to-camel-case: false  #是否关闭驼峰到下划线的映射
     cache-enabled: false  #是否开启二级缓存
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #打印sql语句
+  global-config:
+    datacenter-id: 1
+    worker-id: 1

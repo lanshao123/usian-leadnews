@@ -12,6 +12,15 @@ import java.util.List;
  * @param <T>
  */
 public class ResponseResult<T> implements Serializable {
+    @Override
+    public String toString() {
+        return "ResponseResult{" +
+                "host='" + host + '\'' +
+                ", code=" + code +
+                ", errorMessage='" + errorMessage + '\'' +
+                ", data=" + data +
+                '}';
+    }
 
     private String host;
 

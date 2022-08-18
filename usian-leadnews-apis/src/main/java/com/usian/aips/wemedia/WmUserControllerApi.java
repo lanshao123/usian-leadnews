@@ -19,4 +19,11 @@ public interface WmUserControllerApi {
      * @return
      */
     public WmUser findByName(String name);
+
+    /**
+     * 根据id查询用户
+     * @param id
+     * @return
+     */
+    public WmUser findById(Integer id);
 }

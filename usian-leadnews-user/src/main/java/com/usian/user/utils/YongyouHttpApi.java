@@ -19,5 +19,10 @@ public class YongyouHttpApi {
     //人证核验
     public final static String COMPARISONSOFPERSONSANDDOCUMENTS ="https://api.yonyoucloud.com/apis/dst/ComparisonsofPersonsandDocuments/ComparisonsofPersonsandDocuments";
     public final static String COMPARISONSOFPERSONSANDDOCUMENTSCODE="42d55f732bc14ec8a61ba4e0ba4cdffb";
-
+    //文本审核
+    public final static String ContentCheck  ="https://api.yonyoucloud.com/apis/dst/textCheck/contentCheck";
+    public final static String ContentCheckCODE="4d56251195084fe493fbe06cc2e0b169";
+    //内容审核_组合服务
+    public final static String ContentAudit_CompositeServices  ="https://api.yonyoucloud.com/apis/dst/ContentAudit_CompositeServices/ContentAudit_CompositeServices";
+    public final static String ContentAudit_CompositeServicesCode="def7eaeabe0f4961af2d414b927c6bee";
 }
