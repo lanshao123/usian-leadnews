@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.usian.common.contants.wemedia.WemediaContans;
 import com.usian.common.exception.ExceptionCast;
+import com.usian.model.admin.dtos.NewsAuthDto;
 import com.usian.model.common.dtos.PageResponseResult;
 import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.common.enums.AppHttpCodeEnum;
@@ -22,6 +23,7 @@ import com.usian.wemedia.mapper.WmNewsMapper;
 import com.usian.wemedia.mapper.WmNewsMaterialMapper;
 import com.usian.wemedia.service.WmNewsService;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,6 +47,8 @@ import java.util.stream.Collectors;
 public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> implements WmNewsService {
     @Value("${fdfs.url}")
     private String url;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
     @Autowired
     private WmMaterialMapper wmMaterialMapper;
     @Autowired
@@ -187,6 +191,24 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
         return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
     }
 
+    @Override
+    public PageResponseResult findListByName(NewsAuthDto newsAuthDto) {
+
+
+
+        if (newsAuthDto == null) {
+            ExceptionCast.cast(1, "数据非法");
+        }
+        newsAuthDto.checkParam();
+       LambdaQueryWrapper<WmNews> queryWrapper=new LambdaQueryWrapper<>();
+        queryWrapper.like(newsAuthDto.getTitle()!=null,WmNews::getTitle,newsAuthDto.getTitle());
+        IPage<WmNews> iPage = this.page(new Page<>(newsAuthDto.getPage(), newsAuthDto.getSize()), queryWrapper);
+        PageResponseResult responseResult = new PageResponseResult(newsAuthDto.getPage(), newsAuthDto.getSize(), (int) iPage.getTotal());
+        responseResult.setData(iPage.getRecords());
+        //responseResult.setHost(url);
+        return responseResult;
+    }
+
     /**
      *  //设置封面和素材的关系
      *  有两个模式 一个是自动，一个是我们指定 选择了几张图片
@@ -282,6 +304,7 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
     }
 
     private void saveWmNews(WmNews wmNews, Short isSubmit) {
+        boolean falg=false;
         //保存草稿 还是发布待审核
         wmNews.setStatus(isSubmit);
         wmNews.setUserId(WmThreadLocalUtils.getUser().getId());
@@ -291,7 +314,7 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
         //判断是保存还是修改
         if(wmNews.getId()==null){
             //保存
-            this.save(wmNews);
+            falg = this.save(wmNews);
         }else{
             //修改
             //先删除素材跟文章关系表数据
@@ -299,7 +322,13 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
             queryWrapper.eq(WmMaterial::getId,wmNews.getId());
             wmMaterialMapper.delete(queryWrapper);
             //在进行修改
-            this.updateById(wmNews);
+            falg= this.updateById(wmNews);
+        }
+        //如果保存 或者修改成功才进行发送mq消息
+        System.out.println("检测到新文章，发送mq 开始自动审核");
+        if(falg){
+            //给MQ发送消息
+            rabbitTemplate.convertAndSend("authNewsExchange","authNews",wmNews.getId());
         }
     }
 }

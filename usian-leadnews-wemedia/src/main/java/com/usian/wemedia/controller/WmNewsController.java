@@ -1,6 +1,8 @@
 package com.usian.wemedia.controller;
 
 import com.usian.aips.wemedia.WmNewsControllerApi;
+import com.usian.model.admin.dtos.NewsAuthDto;
+import com.usian.model.common.dtos.PageResponseResult;
 import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.common.enums.AppHttpCodeEnum;
 import com.usian.model.media.dtos.WmNewsDto;
@@ -9,6 +11,8 @@ import com.usian.model.media.pojos.WmNews;
 import com.usian.wemedia.service.WmNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @program: usian-leadnews
@@ -69,4 +73,12 @@ public class WmNewsController implements WmNewsControllerApi {
          wmNewsService.updateById(wmNews);
         return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
     }
+
+    @Override
+    @PostMapping("/findListByName")
+    public PageResponseResult findListByName(@RequestBody NewsAuthDto newsAuthDto) {
+        return wmNewsService.findListByName(newsAuthDto);
+    }
+
+
 }

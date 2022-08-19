@@ -63,7 +63,7 @@ public class ContentCheck {
         System.out.println(conn1);
     }
     public  String tt() throws IOException {
-        HttpGet get=new HttpGet("http://192.168.211.132:8080/group1/M00/00/00/wKjThGL8udCAVJzyAAABRD4S5Vk181.png");
+        HttpGet get=new HttpGet("http://192.168.211.132:8080/group1/M00/00/00/wKjThGL84JqAbRfbAAAQOXk1pd0832.jpg");
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse response = httpClient.execute(get);
         HttpEntity entity = response.getEntity();

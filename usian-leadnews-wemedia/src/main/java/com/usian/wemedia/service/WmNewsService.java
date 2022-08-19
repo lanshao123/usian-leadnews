@@ -1,6 +1,8 @@
 package com.usian.wemedia.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.usian.model.admin.dtos.NewsAuthDto;
+import com.usian.model.common.dtos.PageResponseResult;
 import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.media.dtos.WmNewsDto;
 import com.usian.model.media.dtos.WmNewsPageReqDto;
@@ -40,4 +42,6 @@ public interface WmNewsService extends IService<WmNews> {
      * @return
      */
     ResponseResult downOrUp(WmNewsDto dto);
+
+    PageResponseResult findListByName(NewsAuthDto newsAuthDto);
 }

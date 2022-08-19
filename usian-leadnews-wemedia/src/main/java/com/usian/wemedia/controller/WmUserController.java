@@ -29,7 +29,7 @@ public class WmUserController implements WmUserControllerApi {
     @PostMapping("/save")
     public ResponseResult save(@RequestBody WmUser wmUser) {
         wmUserService.save(wmUser);
-        return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
+        return ResponseResult.okResult(wmUser);
     }
 
     @Override

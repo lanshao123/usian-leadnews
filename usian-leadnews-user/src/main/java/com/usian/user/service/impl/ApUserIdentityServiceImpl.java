@@ -6,6 +6,7 @@ import com.usian.common.exception.ExceptionCast;
 import com.usian.model.article.pojos.ApAuthor;
 import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.common.enums.AppHttpCodeEnum;
+import com.usian.model.media.pojos.WmNews;
 import com.usian.model.media.pojos.WmUser;
 import com.usian.model.user.dtos.AuthDto;
 import com.usian.model.user.pojos.ApUser;
@@ -132,7 +133,9 @@ public class ApUserIdentityServiceImpl extends ServiceImpl<ApUserIdentityMapper,
             //账号类型
             byName.setType(0);
             //保存自媒体
-            wemediaFeign.save(byName);
+            ResponseResult save = wemediaFeign.save(byName);
+           WmUser wmUser=(WmUser) save.getData();
+            byName.setId(wmUser.getId());
 
         }else{
             //不为空说明，以及存在自媒体

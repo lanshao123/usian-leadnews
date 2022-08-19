@@ -1,21 +1,14 @@
-package com.usian.user.listener;
+package com.usian.admin.listener;
 
 import com.rabbitmq.client.Channel;
-import com.usian.model.user.dtos.AuthDto;
-import com.usian.user.config.RabbitmqConfig;
-import com.usian.user.service.ApUserRealnameService;
+import com.usian.admin.config.RabbitmqConfig;
+import com.usian.admin.service.WemediaNewsAutoScanService;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.handler.annotation.Payload;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 
 
 /**
@@ -27,16 +20,12 @@ import java.util.HashSet;
 @Configuration
 public class RabbitMQListener {
     @Autowired
-    private ApUserRealnameService apUserRealnameService;
-    @RabbitListener(queues = {RabbitmqConfig.AUTHQUEUE})
+    private WemediaNewsAutoScanService wemediaNewsAutoScanService;
+    @RabbitListener(queues = {RabbitmqConfig.AUTHNEWSQUEUE})
     public void authQueueListener(String msg, Channel channel, Message mqMsg) throws IOException {
-
-        System.out.println(msg);
-        AuthDto authDto=new AuthDto();
-        authDto.setId(Integer.valueOf(msg));
         System.out.println("收到消息:"+msg);
         try {
-            apUserRealnameService.AutoUpdateStatus(authDto);
+            wemediaNewsAutoScanService.autoScanByMediaNewsId(Integer.valueOf(msg));
             System.out.println("success，手动签收");
             channel.basicAck(mqMsg.getMessageProperties().getDeliveryTag(), false);
         } catch (Exception e) {

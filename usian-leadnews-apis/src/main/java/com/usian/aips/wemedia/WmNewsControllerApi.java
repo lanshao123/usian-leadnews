@@ -1,10 +1,17 @@
 package com.usian.aips.wemedia;
 
+import com.usian.model.admin.dtos.NewsAuthDto;
+import com.usian.model.common.dtos.PageResponseResult;
 import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.media.dtos.WmNewsDto;
 import com.usian.model.media.dtos.WmNewsPageReqDto;
 import com.usian.model.media.pojos.WmNews;
 import io.swagger.annotations.Api;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 @Api(value = "自媒体列表",tags = "userLogin",description = "自媒体列表API")
 public interface WmNewsControllerApi {
@@ -49,5 +56,6 @@ public interface WmNewsControllerApi {
      * @return
      */
     ResponseResult updateWmNews(WmNews wmNews);
+    PageResponseResult findListByName(NewsAuthDto newsAuthDto);
 
 }

@@ -3,6 +3,12 @@ server:
 spring:
   application:
     name: leadnews-wemedia
+  rabbitmq:
+    host: 192.168.211.132
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
   cloud:
     nacos:
       discovery:

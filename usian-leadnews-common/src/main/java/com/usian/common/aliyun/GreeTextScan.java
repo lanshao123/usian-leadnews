@@ -30,7 +30,7 @@ public class GreeTextScan {
     private String accessKeyId;
     private String secret;
 
-    public Map greeTextScan(List<String> contents) throws Exception {
+    public Map greeTextScan(String content) throws Exception {
         //这边是传入了多段文件需要检测
         IClientProfile profile = DefaultProfile
                 .getProfile("cn-shanghai", accessKeyId, secret);
@@ -45,15 +45,22 @@ public class GreeTextScan {
         textScanRequest.setRegionId("cn-shanghai");
         List<Map<String, Object>> tasks = new ArrayList<Map<String, Object>>();
         //批量把文本放入tasks
-       for (String content:contents){
-            Map<String, Object> task1 = new LinkedHashMap<String, Object>();
-            task1.put("dataId", UUID.randomUUID().toString());
-            /**
-             * 待检测的文本，长度不超过10000个字符
-             */
-            task1.put("content", content);
-            tasks.add(task1);
-        }
+       // for (String content:contents){
+       //      Map<String, Object> task1 = new LinkedHashMap<String, Object>();
+       //      task1.put("dataId", UUID.randomUUID().toString());
+       //      /**
+       //       * 待检测的文本，长度不超过10000个字符
+       //       */
+       //      task1.put("content", content);
+       //      tasks.add(task1);
+       //  }
+        Map<String, Object> task1 = new LinkedHashMap<String, Object>();
+        task1.put("dataId", UUID.randomUUID().toString());
+             /**
+              * 待检测的文本，长度不超过10000个字符
+              */
+        task1.put("content", content);
+        tasks.add(task1);
         JSONObject data = new JSONObject();
 
         /**

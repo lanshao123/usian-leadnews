@@ -34,8 +34,8 @@ public class AliyunTest {
         List<String> list=new ArrayList<>();
         list.add("我是王恒");
         list.add("买卖冰毒");
-        Map map = greeTextScan.greeTextScan(list);
-        System.out.println(map);
+       // Map map = greeTextScan.greeTextScan(list);
+       // System.out.println(map);
     }
     @Test
     public void textImgaes() throws Exception {

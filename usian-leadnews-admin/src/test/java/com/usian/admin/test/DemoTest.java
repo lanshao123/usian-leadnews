@@ -95,4 +95,15 @@ public class DemoTest {
         System.out.println(wmUserById);
 
     }
+
+    @Test
+    public void  tt(){
+        try {
+            return;
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            System.out.println(123);
+        }
+    }
 }
