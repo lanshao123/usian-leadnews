@@ -1,6 +1,7 @@
 package com.usian.admin.test;
 
 import com.usian.admin.service.WemediaNewsAutoScanService;
+import com.usian.utils.common.AppJwtUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,4 +24,6 @@ public class wnNewsTest {
         wemediaNewsAutoScanService.autoScanByMediaNewsId(6181);
 
     }
+
+
 }

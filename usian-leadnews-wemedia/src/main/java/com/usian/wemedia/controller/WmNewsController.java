@@ -8,6 +8,7 @@ import com.usian.model.common.enums.AppHttpCodeEnum;
 import com.usian.model.media.dtos.WmNewsDto;
 import com.usian.model.media.dtos.WmNewsPageReqDto;
 import com.usian.model.media.pojos.WmNews;
+import com.usian.model.media.vos.WmNewsVo;
 import com.usian.wemedia.service.WmNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -75,9 +76,21 @@ public class WmNewsController implements WmNewsControllerApi {
     }
 
     @Override
-    @PostMapping("/findListByName")
-    public PageResponseResult findListByName(@RequestBody NewsAuthDto newsAuthDto) {
-        return wmNewsService.findListByName(newsAuthDto);
+    @PostMapping("/findList")
+    public PageResponseResult findList(@RequestBody NewsAuthDto newsAuthDto) {
+        return wmNewsService.findListAndPage(newsAuthDto);
+    }
+
+    @Override
+    @GetMapping("/find_news_vo/{id}")
+    public WmNewsVo findWmNewsVo(@PathVariable("id") Integer id) {
+        return wmNewsService.findWmNewsVo(id);
+    }
+
+    @Override
+    @GetMapping("findRelease")
+    public List<Integer> findRelease() {
+        return wmNewsService.findRelease();
     }
 
 

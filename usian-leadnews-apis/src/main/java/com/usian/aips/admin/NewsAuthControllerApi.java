@@ -19,4 +19,11 @@ public interface NewsAuthControllerApi {
      */
     public ResponseResult auth_pass(@RequestBody NewsAuthDto newsAuthDto);
     public ResponseResult list(@RequestBody NewsAuthDto newsAuthDto);
+    /**
+     * 查询文章详情
+     * @param id
+     * @return
+     */
+    public ResponseResult findOne(Integer id);
+
 }

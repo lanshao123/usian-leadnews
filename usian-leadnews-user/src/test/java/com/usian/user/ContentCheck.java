@@ -2,6 +2,7 @@ package com.usian.user;
 
 import com.usian.user.utils.YongYouApi;
 import com.usian.user.utils.YongyouHttpApi;
+import com.usian.utils.common.AppJwtUtil;
 import com.usian.utils.common.Base64Utils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -24,6 +25,9 @@ import java.util.*;
  * @create: 2022-08-18 11:32
  **/
 public class ContentCheck {
+    public static void main(String[] args) {
+        System.out.println(AppJwtUtil.getToken(1l));
+    }
     @Test
     public void contentCheck(){
         //基于rest风格的 api接口形式
