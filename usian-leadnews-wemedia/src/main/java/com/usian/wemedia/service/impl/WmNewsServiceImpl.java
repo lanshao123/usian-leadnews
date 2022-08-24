@@ -1,8 +1,11 @@
 package com.usian.wemedia.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.usian.common.contants.wemedia.WemediaContans;
@@ -17,12 +20,16 @@ import com.usian.model.media.pojos.WmMaterial;
 import com.usian.model.media.pojos.WmNews;
 import com.usian.model.media.pojos.WmNewsMaterial;
 import com.usian.model.media.pojos.WmUser;
+import com.usian.model.media.vos.WmNewsVo;
 import com.usian.utils.threadlocal.WmThreadLocalUtils;
 import com.usian.wemedia.mapper.WmMaterialMapper;
 import com.usian.wemedia.mapper.WmNewsMapper;
 import com.usian.wemedia.mapper.WmNewsMaterialMapper;
+import com.usian.wemedia.mapper.WmUserMapper;
 import com.usian.wemedia.service.WmNewsService;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +37,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -53,6 +57,10 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
     private WmMaterialMapper wmMaterialMapper;
     @Autowired
     private WmNewsMaterialMapper wmNewsMaterialMapper;
+    @Autowired
+    private WmNewsMapper wmNewsMapper;
+    @Autowired
+    private WmUserMapper wmUserMapper;
 
     @Override
     public ResponseResult findAll(WmNewsPageReqDto dto) {
@@ -187,26 +195,58 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
         if(dto.getEnable()!=null &&dto.getEnable()>-1 && dto.getEnable()<2){
             wmNews.setEnable(dto.getEnable());
             this.updateById(wmNews);
+            //发送消息 修改文章配置信息
+            Map<String,Object> mesMap = new HashMap<>();
+            mesMap.put("enable",dto.getEnable());
+            mesMap.put("articleId",wmNews.getArticleId());
+            rabbitTemplate.convertAndSend("APARTICLECONFIGEXCHANGE","aparticleconfig", JSONObject.toJSONString(mesMap));
         }
         return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
     }
 
     @Override
-    public PageResponseResult findListByName(NewsAuthDto newsAuthDto) {
-
-
-
-        if (newsAuthDto == null) {
-            ExceptionCast.cast(1, "数据非法");
+    public PageResponseResult findListAndPage(NewsAuthDto dto) {
+        if(dto==null){
+            ExceptionCast.cast(1,"参数非法");
         }
-        newsAuthDto.checkParam();
-       LambdaQueryWrapper<WmNews> queryWrapper=new LambdaQueryWrapper<>();
-        queryWrapper.like(newsAuthDto.getTitle()!=null,WmNews::getTitle,newsAuthDto.getTitle());
-        IPage<WmNews> iPage = this.page(new Page<>(newsAuthDto.getPage(), newsAuthDto.getSize()), queryWrapper);
-        PageResponseResult responseResult = new PageResponseResult(newsAuthDto.getPage(), newsAuthDto.getSize(), (int) iPage.getTotal());
-        responseResult.setData(iPage.getRecords());
-        //responseResult.setHost(url);
+        dto.checkParam();
+        dto.setPage((dto.getPage()-1)*dto.getSize());
+        if(!StringUtils.isEmpty(dto.getTitle())){
+            dto.setTitle("%"+dto.getTitle()+"%");
+        }
+        List<WmNewsVo> listAndPage = wmNewsMapper.findListAndPage(dto);
+        int listCount = wmNewsMapper.findListCount(dto);
+        PageResponseResult responseResult = new PageResponseResult(dto.getPage(), dto.getSize(),listCount);
+        responseResult.setData(listAndPage);
         return responseResult;
+    }
+
+    @Override
+    /**
+     * 根据文章id查询文章信息
+     */
+    public WmNewsVo findWmNewsVo(Integer id) {
+        //查询文章
+        WmNews wmNews = this.getById(id);
+        //2.查询作者
+        WmUser wmUser = null;
+        if(wmNews!=null && wmNews.getUserId() != null){
+            wmUser = wmUserMapper.selectById(wmNews.getUserId());
+        }
+        //赋值返回给前端
+        WmNewsVo wmNewsVo=new WmNewsVo();
+        BeanUtils.copyProperties(wmNews,wmNewsVo);
+        if(wmUser != null){
+            wmNewsVo.setAuthorName(wmUser.getName());
+        }
+        return wmNewsVo;
+    }
+
+    @Override
+    public List<Integer> findRelease() {
+        List<WmNews> list = this.list(Wrappers.<WmNews>lambdaQuery().eq(WmNews::getStatus, 8).lt(WmNews::getPublishTime, new Date()));
+        List<Integer> collect = list.stream().map(WmNews::getId).collect(Collectors.toList());
+        return collect;
     }
 
     /**
@@ -329,6 +369,7 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
         if(falg){
             //给MQ发送消息
             rabbitTemplate.convertAndSend("authNewsExchange","authNews",wmNews.getId());
+
         }
     }
 }

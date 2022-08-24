@@ -7,6 +7,9 @@ import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.media.dtos.WmNewsDto;
 import com.usian.model.media.dtos.WmNewsPageReqDto;
 import com.usian.model.media.pojos.WmNews;
+import com.usian.model.media.vos.WmNewsVo;
+
+import java.util.List;
 
 public interface WmNewsService extends IService<WmNews> {
     /**
@@ -42,6 +45,17 @@ public interface WmNewsService extends IService<WmNews> {
      * @return
      */
     ResponseResult downOrUp(WmNewsDto dto);
-
-    PageResponseResult findListByName(NewsAuthDto newsAuthDto);
+    /**
+     * 分页查询文章信息
+     * @param newsAuthDto
+     * @return
+     */
+    PageResponseResult findListAndPage(NewsAuthDto newsAuthDto);
+    /**
+     * 查询文章详情
+     * @param id
+     * @return
+     */
+    WmNewsVo findWmNewsVo(Integer id);
+    List<Integer> findRelease();
 }

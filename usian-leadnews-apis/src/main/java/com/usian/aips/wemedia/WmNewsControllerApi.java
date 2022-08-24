@@ -6,10 +6,8 @@ import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.media.dtos.WmNewsDto;
 import com.usian.model.media.dtos.WmNewsPageReqDto;
 import com.usian.model.media.pojos.WmNews;
+import com.usian.model.media.vos.WmNewsVo;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -56,6 +54,21 @@ public interface WmNewsControllerApi {
      * @return
      */
     ResponseResult updateWmNews(WmNews wmNews);
-    PageResponseResult findListByName(NewsAuthDto newsAuthDto);
-
+    /**
+     * 查询文章列表
+     * @param dto
+     * @return
+     */
+    public PageResponseResult findList(NewsAuthDto dto);
+    /**
+     * 查询文章详情
+     * @param id
+     * @return
+     */
+    public WmNewsVo findWmNewsVo(Integer id) ;
+    /**
+     * 查询需要发布的文章id列表
+     * @return
+     */
+    List<Integer> findRelease();
 }

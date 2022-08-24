@@ -12,6 +12,11 @@ public interface WemediaNewsAutoScanService {
     public void autoScanByMediaNewsId(Integer id) throws Exception;
 
     ResponseResult newsAuthScan(NewsAuthDto newsAuthDto);
-
+    /**
+     * 根据文章id文章信息
+     * @param id
+     * @return
+     */
+    public ResponseResult findOne(Integer id);
     PageResponseResult list(NewsAuthDto newsAuthDto);
 }

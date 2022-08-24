@@ -346,6 +346,11 @@
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl.job.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.opencsv</groupId>
+                <artifactId>opencsv</artifactId>
+                <version>4.4</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

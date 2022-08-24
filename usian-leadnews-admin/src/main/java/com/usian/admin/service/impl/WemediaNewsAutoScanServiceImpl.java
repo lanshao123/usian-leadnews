@@ -22,8 +22,12 @@ import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.common.enums.AppHttpCodeEnum;
 import com.usian.model.media.pojos.WmNews;
 import com.usian.model.media.pojos.WmUser;
+import com.usian.model.media.vos.WmNewsVo;
 import com.usian.utils.common.SensitiveWordUtil;
 import io.seata.spring.annotation.GlobalTransactional;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageBuilder;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +57,8 @@ public class WemediaNewsAutoScanServiceImpl implements WemediaNewsAutoScanServic
     private GreenImageScan greenImageScan;
     @Autowired
     private FastDFSClientUtil fastDFSClientUtil;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
     /**
      * 自媒体文章自动审核接口
      * @param id
@@ -76,9 +82,9 @@ public class WemediaNewsAutoScanServiceImpl implements WemediaNewsAutoScanServic
             saveAppArticle(wmNews);
             return;
         }
-        //判断文章状态  8 ==审核通过待发布 ，发布时间大于现在时间表示可以直接发布文章
+        //判断文章状态  8 ==审核通过待发布 ，发布时间小于等于现在时间表示可以直接发布文章
         if(wmNews.getPublishTime()!=null){
-            if (wmNews.getStatus()==8&&wmNews.getPublishTime().getTime()>System.currentTimeMillis()) {
+            if (wmNews.getStatus()==8&&wmNews.getPublishTime().getTime()<=System.currentTimeMillis()) {
                 saveAppArticle(wmNews);
                 return;
             }
@@ -113,6 +119,21 @@ public class WemediaNewsAutoScanServiceImpl implements WemediaNewsAutoScanServic
                 if (wmNews.getPublishTime().getTime()>System.currentTimeMillis()) {
                     //审核时间大于现在时间 ，就是审核通过待发布
                     updateWmNews(wmNews,(short) 8,"审核通过，待发布");
+                    //发送延迟队列消息
+                    //发布时间减去现在时间 大于0就代表待发布
+                        long time =wmNews.getPublishTime().getTime() - System.currentTimeMillis();
+                        System.out.println("剩余发布时间："+time);
+                        if(time>0){
+                            //发送消息
+                            //创建消息
+                            Message message = MessageBuilder
+                                    .withBody(wmNews.getId().toString().getBytes())
+                                    .setHeader("x-delay",time)
+                                    .build();
+                            // 发送消息
+                            rabbitTemplate.convertAndSend("delayedAuthExchange", "auth", message);
+                        }
+
                     return;
                 }
             }
@@ -153,6 +174,19 @@ public class WemediaNewsAutoScanServiceImpl implements WemediaNewsAutoScanServic
     }
 
     @Override
+    public ResponseResult findOne(Integer id) {
+        //1参数检查
+        if(id == null){
+            return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
+        }
+        //2查询数据
+        WmNewsVo wmNewsVo = wemediaFeign.findWmNewsVo(id);
+        //结构封装
+        ResponseResult responseResult = ResponseResult.okResult(wmNewsVo);
+        return responseResult;
+    }
+
+    @Override
     /**
      * 查询媒体列表
      */
@@ -161,7 +195,7 @@ public class WemediaNewsAutoScanServiceImpl implements WemediaNewsAutoScanServic
             ExceptionCast.cast(1,"参数错误");
         }
         //然后查询
-        return wemediaFeign.findListByName(newsAuthDto);
+        return wemediaFeign.findList(newsAuthDto);
     }
 
     /**
@@ -297,6 +331,7 @@ public class WemediaNewsAutoScanServiceImpl implements WemediaNewsAutoScanServic
         saveArticleConfig(apArticle);
         //保存app文章内容
         saveArticleContent(apArticle,wmNews);
+        wmNews.setArticleId(apArticle.getId());
 
         //修改自媒体文章的状态为9
         updateWmNews(wmNews,(short)9,"审核通过");

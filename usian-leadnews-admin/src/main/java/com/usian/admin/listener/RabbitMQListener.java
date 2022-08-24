@@ -3,10 +3,12 @@ package com.usian.admin.listener;
 import com.rabbitmq.client.Channel;
 import com.usian.admin.config.RabbitmqConfig;
 import com.usian.admin.service.WemediaNewsAutoScanService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.handler.annotation.Payload;
 
 import java.io.IOException;
 
@@ -18,6 +20,7 @@ import java.io.IOException;
  * @create: 2022-08-12 19:19
  **/
 @Configuration
+@Log4j2
 public class RabbitMQListener {
     @Autowired
     private WemediaNewsAutoScanService wemediaNewsAutoScanService;
@@ -34,6 +37,19 @@ public class RabbitMQListener {
             e.printStackTrace();
         }
 
+    }
+
+    /**
+     * 通过延迟队列来进行自动发布
+     * @param msg
+     */
+    @RabbitListener(queues = {RabbitmqConfig.DELAYEDAUTHQueue})
+    public void auth(@Payload Object msg) throws Exception {
+        Message message = (Message) msg;
+        String str =  new String(message.getBody());
+        //收到消息就进行发布文章即可
+        log.info("收到延迟队列的消息：{}-开始发布文章",str);
+        wemediaNewsAutoScanService.autoScanByMediaNewsId(Integer.valueOf(str));
     }
     // /***
     //  * 监听消息

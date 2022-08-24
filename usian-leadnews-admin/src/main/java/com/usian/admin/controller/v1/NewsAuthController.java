@@ -6,10 +6,7 @@ import com.usian.model.admin.dtos.NewsAuthDto;
 import com.usian.model.common.dtos.PageResponseResult;
 import com.usian.model.common.dtos.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @program: usian-leadnews
@@ -36,5 +33,11 @@ public class NewsAuthController implements NewsAuthControllerApi {
     public PageResponseResult list(@RequestBody NewsAuthDto newsAuthDto){
         System.out.println("进入了");
         return wemediaNewsAutoScanService.list(newsAuthDto);
+    }
+
+    @Override
+    @GetMapping("/one/{id}")
+    public ResponseResult findOne(@PathVariable("id") Integer id) {
+        return wemediaNewsAutoScanService.findOne(id);
     }
 }

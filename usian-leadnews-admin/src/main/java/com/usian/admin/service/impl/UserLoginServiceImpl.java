@@ -2,6 +2,8 @@ package com.usian.admin.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Maps;
 import com.usian.admin.mapper.AdUserMapper;
@@ -73,5 +75,12 @@ public class UserLoginServiceImpl extends ServiceImpl<AdUserMapper, AdUser> impl
         }
 
         return null;
+    }
+
+    @Override
+    public List<AdUser> findPage(int page, int size) {
+        IPage<AdUser> iPage=new Page<>(page,size);
+        IPage<AdUser> page1 = this.page(iPage);
+        return page1.getRecords();
     }
 }
