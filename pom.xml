@@ -21,6 +21,8 @@
         <module>usian-leadnews-seata</module>
         <module>usian-leadnews-canal</module>
         <module>usian-leadnews-wemedia-gateway</module>
+        <module>usian-leadnews-app-gateway</module>
+        <module>usian-leadnews-sms</module>
     </modules>
 
     <!-- 继承Spring boot工程 -->

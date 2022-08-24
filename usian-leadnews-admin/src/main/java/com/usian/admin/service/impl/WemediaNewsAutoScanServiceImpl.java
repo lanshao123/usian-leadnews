@@ -409,6 +409,7 @@ public class WemediaNewsAutoScanServiceImpl implements WemediaNewsAutoScanServic
             apArticle.setChannelName(adChannel.getName());
             apArticle.setChannelId(adChannel.getId());
         }
+        apArticle.setPublishTime(new Date());
         //最后远程调用保存接口
         return articleFeign.saveArticle(apArticle);
     }

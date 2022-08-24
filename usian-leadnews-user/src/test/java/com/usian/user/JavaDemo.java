@@ -19,6 +19,7 @@ import javax.net.ssl.SSLSession;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.usian.utils.common.AppJwtUtil;
 import lombok.extern.log4j.Log4j2;
 public class JavaDemo {
     public static final String DEF_CHATSET = "UTF-8";
@@ -36,7 +37,6 @@ public class JavaDemo {
     public static final String APICODE ="766be96f47804bc2bfe6772b3b2b72dc";
  
 
- 
     /**
      *
      * @param strUrl 请求地址
@@ -235,6 +235,8 @@ public class JavaDemo {
 
 
     public static void main(String[] args) {
+        System.out.println(AppJwtUtil.getToken(1l));
+
         //这个是调用了身份证OCR 识别身份证信息
         //String request = IdcardOCR ();
         //System.out.println(request);
