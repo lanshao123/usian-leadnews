@@ -23,9 +23,7 @@ public class RabbitMQListener {
 
     @RabbitListener(queues = {"SMSQueue"})
     public void authSms(String msg) throws IOException {
-        System.out.println("收到消息:"+msg);
         UserSmsDto userSmsDto = JSONObject.parseObject(msg, UserSmsDto.class);
-        System.out.println(userSmsDto);
         if (userSmsDto.getTeme_code().equals(SmsModel.LOGIN)) {
             System.out.println("登陆验证码:"+userSmsDto.getCode());
         }else if (userSmsDto.getTeme_code().equals(SmsModel.REGISTER)){

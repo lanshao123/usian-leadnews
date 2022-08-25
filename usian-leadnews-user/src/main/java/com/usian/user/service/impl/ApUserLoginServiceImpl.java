@@ -48,6 +48,12 @@ public class ApUserLoginServiceImpl  implements ApUserLoginService {
         //2.手机号+密码登录
         if (!StringUtils.isEmpty(dto.getPhone()) && !StringUtils.isEmpty(dto.getPassword())) {
             //用户登录
+            //先判断redis
+            Object o = redisTemplate.boundValueOps(SmsModel.LOGIN1 + dto.getPhone()).get();
+            System.out.println(o);
+            if(o!=null && "3".equals(o.toString())){
+                ExceptionCast.cast(1,"登陆失败次数过多,请5分钟后重试");
+            }
             ApUser dbUser = apUserMapper.selectOne(Wrappers.<ApUser>lambdaQuery().eq(ApUser::getPhone, dto.getPhone()));
             if (dbUser != null) {
                 if (BCrypt.checkpw(dto.getPassword(), dbUser.getPassword())) {
@@ -58,7 +64,16 @@ public class ApUserLoginServiceImpl  implements ApUserLoginService {
                     map.put("user", dbUser);
                     return ResponseResult.okResult(map);
                 } else {
+                    Integer a=null;
+                    if(o==null){
+                        a=1;
+                    }else{
+                        a=(Integer) o+1;
+                    }
+                    redisTemplate.boundValueOps(SmsModel.LOGIN1 + dto.getPhone()).set(a);
+                    if(a>=3) redisTemplate.boundValueOps(SmsModel.LOGIN1 + dto.getPhone()).expire(300, TimeUnit.SECONDS );
                     ExceptionCast.cast(1, "密码错误");
+
                 }
             } else {
                 ExceptionCast.cast(1, "用户不存在");

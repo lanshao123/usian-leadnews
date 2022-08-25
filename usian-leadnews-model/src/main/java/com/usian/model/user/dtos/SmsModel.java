@@ -9,4 +9,5 @@ package com.usian.model.user.dtos;
 public class SmsModel {
     public final static  String LOGIN="login";
     public final static  String REGISTER="register";
+    public final static  String LOGIN1="LOGIN1";
 }
