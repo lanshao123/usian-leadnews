@@ -6,6 +6,7 @@ import com.usian.common.exception.ExceptionCast;
 import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.common.enums.AppHttpCodeEnum;
 import com.usian.model.user.dtos.LoginDto;
+import com.usian.model.user.dtos.SmsModel;
 import com.usian.model.user.dtos.UserSmsDto;
 import com.usian.model.user.pojos.ApUser;
 import com.usian.user.mapper.ApUserMapper;
@@ -76,27 +77,48 @@ public class ApUserLoginServiceImpl  implements ApUserLoginService {
     }
 
     @Override
+    /**
+     * 验证码注册
+     */
     public ResponseResult register(LoginDto dto) {
         //1.校验参数
-        if (dto.getEquipmentId() == null && (StringUtils.isEmpty(dto.getPassword()) && StringUtils.isEmpty(dto.getPassword()))) {
-            ExceptionCast.cast(1, "账号密码不能为空");
+        if (dto.getEquipmentId() == null && (StringUtils.isEmpty(dto.getPhone()) && StringUtils.isEmpty(dto.getPassword()))) {
+            ExceptionCast.cast(1, "手机号验证码不能为空");
         }
-        //最简单的注册
-        ApUser apUser=new ApUser();
+        //判断验证码是否正确
+        //如果数据存在，先检查验证码 在检查用户是否注册
+        Object o = redisTemplate.boundValueOps(SmsModel.REGISTER + dto.getPhone()).get();
+        if(o==null){
+            //验证码为空
+            ExceptionCast.cast(1,"验证码过期");
+        }
+        //验证码存在 判断验证码 然后进行用户验证
+        if(!dto.getPassword().equals(o.toString())){
+            ExceptionCast.cast(1,"验证码错误");
+        }
+        //y验证用户
+        ApUser apUser = apUserMapper.selectOne(Wrappers.<ApUser>lambdaQuery().eq(ApUser::getPhone, dto.getPhone()));
+        if(apUser!=null){
+            ExceptionCast.cast(1,"用户已经注册");
+        }
+        //注册成功删除redis 的key
+        redisTemplate.delete(SmsModel.REGISTER + dto.getPhone());
+        //直接进行注册
+         apUser=new ApUser();
         apUser.setName(dto.getPhone());
         apUser.setPhone(dto.getPhone());
         apUser.setSex(true);
         apUser.setStatus(true);
         apUser.setFlag((short)1);
         apUser.setCreatedTime(new Date());
-        apUser.setPassword(BCrypt.hashpw(dto.getPassword(),BCrypt.gensalt()));
+        apUser.setPassword(BCrypt.hashpw(dto.getPhone(),BCrypt.gensalt()));
         apUserMapper.insert(apUser);
         return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
     }
 
     @Override
     /**
-     * 登陆发送验证码
+     * 通用发送验证码
      */
     public ResponseResult sms(LoginDto dto) {
         if(dto==null ||dto.getPhone()==null){
@@ -125,5 +147,38 @@ public class ApUserLoginServiceImpl  implements ApUserLoginService {
         redisTemplate.boundValueOps(dto.getPhone()).set(code);
         redisTemplate.boundValueOps(dto.getPhone()).expire(60, TimeUnit.SECONDS );
         return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
+    }
+
+    @Override
+    /**
+     * 验证码登陆
+     */
+    public ResponseResult loginCode(LoginDto dto) {
+        if (dto==null ||dto.getPhone()==null||dto.getPassword()==null) {
+            ExceptionCast.cast(1,"手机号验证码不能为空");
+        }
+        //如果数据存在，先检查验证码 在检查用户是否注册
+        Object o = redisTemplate.boundValueOps(SmsModel.LOGIN + dto.getPhone()).get();
+        if(o==null){
+            //验证码为空
+            ExceptionCast.cast(1,"验证码过期");
+        }
+        //验证码存在 判断验证码 然后进行用户验证
+        if(!dto.getPassword().equals(o.toString())){
+            ExceptionCast.cast(1,"验证码错误");
+        }
+        //y验证用户
+        ApUser dbUser = apUserMapper.selectOne(Wrappers.<ApUser>lambdaQuery().eq(ApUser::getPhone, dto.getPhone()));
+        if(dbUser==null){
+            ExceptionCast.cast(1,"用户未注册");
+        }
+        //登陆成功删除redis数据
+        redisTemplate.delete(SmsModel.LOGIN + dto.getPhone());
+        Map<String, Object> map = new HashMap<>();
+        dbUser.setPassword("");
+        dbUser.setSalt("");
+        map.put("token", AppJwtUtil.getToken(dbUser.getId().longValue()));
+        map.put("user", dbUser);
+        return ResponseResult.okResult(map);
     }
 }

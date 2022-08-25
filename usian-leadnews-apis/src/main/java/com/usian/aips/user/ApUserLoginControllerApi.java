@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface ApUserLoginControllerApi {
     /**
-     * app端登录
+     * app端密码登录
      * @param dto
      * @return
      */
@@ -22,5 +22,15 @@ public interface ApUserLoginControllerApi {
      * 登陆发送验证码
      */
     public ResponseResult loginSms(LoginDto dto);
+    /**
+     * 注册发送验证码
+     */
     public ResponseResult registerSms( LoginDto dto);
+
+    /**
+     * app端验证码登录
+     * @param dto
+     * @return
+     */
+    public ResponseResult loginCode(LoginDto dto);
 }

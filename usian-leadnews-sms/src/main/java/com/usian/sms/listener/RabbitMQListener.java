@@ -1,6 +1,7 @@
 package com.usian.sms.listener;
 
 import com.alibaba.fastjson.JSONObject;
+import com.usian.model.user.dtos.SmsModel;
 import com.usian.model.user.dtos.UserSmsDto;
 import com.usian.sms.utils.sendsmsutf8;
 import lombok.extern.log4j.Log4j2;
@@ -25,12 +26,12 @@ public class RabbitMQListener {
         System.out.println("收到消息:"+msg);
         UserSmsDto userSmsDto = JSONObject.parseObject(msg, UserSmsDto.class);
         System.out.println(userSmsDto);
-        if (userSmsDto.getTeme_code().equals("login")) {
+        if (userSmsDto.getTeme_code().equals(SmsModel.LOGIN)) {
             System.out.println("登陆验证码:"+userSmsDto.getCode());
-        }else if (userSmsDto.getTeme_code().equals("register")){
+        }else if (userSmsDto.getTeme_code().equals(SmsModel.REGISTER)){
             System.out.println("注册验证码:"+userSmsDto.getCode());
         }
-        sendsmsutf8.smscode(userSmsDto.getPhone(),userSmsDto.getCode());
+        //sendsmsutf8.smscode(userSmsDto.getPhone(),userSmsDto.getCode());
 
     }
 

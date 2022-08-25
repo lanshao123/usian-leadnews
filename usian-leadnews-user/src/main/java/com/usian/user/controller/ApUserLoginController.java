@@ -3,6 +3,7 @@ package com.usian.user.controller;
 import com.usian.aips.user.ApUserLoginControllerApi;
 import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.user.dtos.LoginDto;
+import com.usian.model.user.dtos.SmsModel;
 import com.usian.user.service.ApUserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,13 +37,19 @@ public class ApUserLoginController implements ApUserLoginControllerApi {
     @Override
     @PostMapping("loginSms")
     public ResponseResult loginSms(@RequestBody LoginDto dto) {
-        dto.setTeme_code("login");
+        dto.setTeme_code(SmsModel.LOGIN);
         return apUserLoginService.sms(dto);
     }
     @Override
     @PostMapping("registerSms")
     public ResponseResult registerSms(@RequestBody LoginDto dto) {
-        dto.setTeme_code("register");
+        dto.setTeme_code(SmsModel.REGISTER);
         return apUserLoginService.sms(dto);
+    }
+
+    @Override
+    @PostMapping("loginCode")
+    public ResponseResult loginCode(@RequestBody LoginDto dto) {
+        return apUserLoginService.loginCode(dto);
     }
 }

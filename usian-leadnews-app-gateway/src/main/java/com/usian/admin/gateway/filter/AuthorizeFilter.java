@@ -31,7 +31,7 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
         ServerHttpResponse response = exchange.getResponse();
         //2.判断当前的请求是否为登录，如果是，直接放行
         Boolean falg=false;
-        String[] urls={"login_auth","register"};
+        String[] urls={"login_auth","register","login"};
         for (String url : urls) {
             if (request.getURI().getPath().contains(url)) {
                 falg=true;

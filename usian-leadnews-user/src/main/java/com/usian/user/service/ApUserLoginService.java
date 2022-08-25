@@ -14,4 +14,6 @@ public interface ApUserLoginService {
     ResponseResult register(LoginDto dto);
 
     ResponseResult sms(LoginDto dto);
+
+    ResponseResult loginCode(LoginDto dto);
 }
