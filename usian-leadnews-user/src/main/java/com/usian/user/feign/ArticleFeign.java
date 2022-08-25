@@ -23,7 +23,8 @@ import java.util.List;
 public interface ArticleFeign {
      @GetMapping("/api/v1/author/findByUserId/{id}")
      public ApAuthor findByUserId(@PathVariable("id") Integer id);
-
+     @GetMapping("/api/v1/author/one/{id}")
+     ApAuthor selectById(@PathVariable("id") Integer id);
      @PostMapping("/api/v1/author/save")
      public ResponseResult save(@RequestBody ApAuthor apAuthor);
 }

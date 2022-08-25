@@ -29,7 +29,7 @@ public class RabbitMQListener {
         }else if (userSmsDto.getTeme_code().equals(SmsModel.REGISTER)){
             System.out.println("注册验证码:"+userSmsDto.getCode());
         }
-        //sendsmsutf8.smscode(userSmsDto.getPhone(),userSmsDto.getCode());
+        sendsmsutf8.smscode(userSmsDto.getPhone(),userSmsDto.getCode());
 
     }
 

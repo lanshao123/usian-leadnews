@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * @author: wangheng
  * @create: 2022-08-04 10:54
  **/
-//@Configuration
-//@ComponentScan("com.usian.common.exception")
+@Configuration
+@ComponentScan("com.usian.common.exception")
 public class ExceptionCatchConfig {
 }

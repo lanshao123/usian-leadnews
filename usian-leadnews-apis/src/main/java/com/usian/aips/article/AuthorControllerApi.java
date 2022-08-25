@@ -26,4 +26,10 @@ public interface AuthorControllerApi {
      * @return
      */
     public ApAuthor findByName(@PathVariable("name") String name);
+    /**
+     * 根据Id查询作者
+     * @param id
+     * @return
+     */
+    public ApAuthor findById(@PathVariable("id") Integer id);
 }

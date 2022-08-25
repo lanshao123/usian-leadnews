@@ -54,4 +54,10 @@ public class ApAuthorController implements AuthorControllerApi {
         ApAuthor one = apAuthorService.getOne(Wrappers.<ApAuthor>lambdaQuery().eq(ApAuthor::getName, name));
         return one;
     }
+
+    @Override
+    @GetMapping("/one/{id}")
+    public ApAuthor findById(@PathVariable Integer id) {
+        return apAuthorService.getById(id);
+    }
 }

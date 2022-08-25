@@ -23,6 +23,7 @@
         <module>usian-leadnews-wemedia-gateway</module>
         <module>usian-leadnews-app-gateway</module>
         <module>usian-leadnews-sms</module>
+        <module>usian-leadnews-behavior</module>
     </modules>
 
     <!-- 继承Spring boot工程 -->

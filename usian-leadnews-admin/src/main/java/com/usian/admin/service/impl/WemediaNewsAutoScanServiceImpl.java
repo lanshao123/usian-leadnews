@@ -372,7 +372,7 @@ public class WemediaNewsAutoScanServiceImpl implements WemediaNewsAutoScanServic
         apArticleConfig.setArticleId(apArticle.getId());
         apArticleConfig.setIsForward(true);
         apArticleConfig.setIsDelete(false);
-        apArticleConfig.setIsDown(true);
+        apArticleConfig.setIsDown(false);
         apArticleConfig.setIsComment(true);
         articleFeign.saveArticleConfig(apArticleConfig);
 
