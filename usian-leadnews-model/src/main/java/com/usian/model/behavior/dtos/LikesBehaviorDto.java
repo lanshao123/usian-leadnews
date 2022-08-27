@@ -13,7 +13,7 @@ public class LikesBehaviorDto {
     Long articleId;
     /**
      * 喜欢内容类型
-     * 0文章
+         * 0文章
      * 1动态
      * 2评论
      */

@@ -346,6 +346,8 @@ public class WemediaNewsAutoScanServiceImpl implements WemediaNewsAutoScanServic
      * @param msg
      */
     private void updateWmNews(WmNews wmNews, short i, String msg) {
+        if(i==3)
+            rabbitTemplate.convertAndSend("EMAILExchange","email",JSONObject.toJSONString(wmNews));
         wmNews.setStatus(i);
         wmNews.setReason(msg);
         wemediaFeign.updateWmNews(wmNews);

@@ -32,3 +32,9 @@ spring:
             - Path=/user/**
           filters:
             - StripPrefix= 1
+        - id: leadnews-behavior
+          uri: lb://leadnews-behavior
+          predicates:
+            - Path=/behavior/**
+          filters:
+            - StripPrefix= 1
