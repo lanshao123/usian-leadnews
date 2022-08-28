@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class ApUnlikesBehaviorController implements ApUnlikesBehaviorControllerApi {
     @Autowired
     private ApUnlikesBehaviorService apUnlikesBehaviorService;
+
     @Override
     @PostMapping
     public ResponseResult unlike(@RequestBody UnLikesBehaviorDto dto) {

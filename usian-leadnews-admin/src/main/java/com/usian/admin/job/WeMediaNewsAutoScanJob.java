@@ -1,6 +1,7 @@
 package com.usian.admin.job;
 
 import com.usian.admin.feign.WemediaFeign;
+import com.usian.admin.service.FaSongService;
 import com.usian.admin.service.WemediaNewsAutoScanService;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.handler.annotation.XxlJob;
@@ -24,6 +25,8 @@ public class WeMediaNewsAutoScanJob {
     private WemediaFeign wemediaFeign;
     @Autowired
     private WemediaNewsAutoScanService wemediaNewsAutoScanService;
+    @Autowired
+    private FaSongService faSongService;
     @XxlJob("weMediaNewsAutoScanJob")
     public ReturnT<String> test(String param) throws Exception {
         List<Integer> release = wemediaFeign.findRelease();
@@ -33,6 +36,12 @@ public class WeMediaNewsAutoScanJob {
                 wemediaNewsAutoScanService.autoScanByMediaNewsId(integer);
             }
         }
+        System.out.println("进行了任务"+new Date());
+        return ReturnT.SUCCESS;
+    }
+    @XxlJob("redisjob")
+    public ReturnT<String> redisjob(String param) throws Exception {
+        faSongService.redis();
         System.out.println("进行了任务"+new Date());
         return ReturnT.SUCCESS;
     }
