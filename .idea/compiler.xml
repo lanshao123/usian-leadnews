@@ -16,6 +16,7 @@
         <module name="usian-leadnews-user" />
         <module name="usian-leadnews-apis" />
         <module name="usian-leadnews-wemedia-gateway" />
+        <module name="usian-leadnews-comment" />
         <module name="usian-leadnews-common" />
         <module name="usian-leadnews-utils" />
         <module name="usian-leadnews-wemedia" />
@@ -34,6 +35,7 @@
       <module name="usian-leadnews-article" options="-parameters" />
       <module name="usian-leadnews-behavior" options="-parameters" />
       <module name="usian-leadnews-canal" options="-parameters" />
+      <module name="usian-leadnews-comment" options="-parameters" />
       <module name="usian-leadnews-common" options="-parameters" />
       <module name="usian-leadnews-model" options="-parameters" />
       <module name="usian-leadnews-seata" options="-parameters" />
