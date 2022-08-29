@@ -11,5 +11,38 @@
 
     <artifactId>usian-leadnews-comment</artifactId>
 
+    <dependencies>
+        <!-- 引入依赖模块 -->
+        <dependency>
+            <groupId>com.wh</groupId>
+            <artifactId>usian-leadnews-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.wh</groupId>
+            <artifactId>usian-leadnews-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.wh</groupId>
+            <artifactId>usian-leadnews-apis</artifactId>
+        </dependency>
+        <!-- Spring boot starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+    </dependencies>
 </project>
