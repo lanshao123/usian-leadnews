@@ -28,6 +28,10 @@ public class UserSearchDto {
     Date minBehotTime;
 
     String layout;
+    /**
+     * 接收搜索历史记录id
+     */
+    Integer id;
 
     public int getFromIndex(){
         if(this.pageNum<1)return 0;

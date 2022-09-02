@@ -9,4 +9,6 @@ public interface ApArticleControllerApi {
      * @return
      */
     ApArticle saveArticle(ApArticle apArticle);
+    //根据文章id查询文章
+    ApArticle findOne(Long id);
 }

@@ -1,15 +1,14 @@
 package com.usian.article.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.usian.aips.article.ApArticleContentControllerApi;
 import com.usian.article.service.ApArticleContentService;
+import com.usian.model.article.pojos.ApArticle;
 import com.usian.model.article.pojos.ApArticleContent;
 import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.common.enums.AppHttpCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @program: usian-leadnews
@@ -27,5 +26,10 @@ public class ApArticleContentController implements ApArticleContentControllerApi
     public ResponseResult saveArticleContent(@RequestBody ApArticleContent apArticleContent) {
         apArticleContentService.save(apArticleContent);
         return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
+    }
+    @Override
+    @GetMapping("/one/{id}")
+    public ApArticleContent findOne(@PathVariable Long id) {
+        return apArticleContentService.getOne(Wrappers.<ApArticleContent>lambdaQuery().eq(ApArticleContent::getArticleId,id));
     }
 }

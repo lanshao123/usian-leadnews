@@ -123,6 +123,13 @@ public class ReadBinLogService implements ApplicationRunner {
             //给MQ发送消息
             rabbitTemplate.convertAndSend("authExchange","auth",id);
         }
+        if(dbName.equals("leadnews_article")&&tableName.equals("ap_article")&&CanalEntry.EventType.INSERT.equals(eventType)){
+            System.out.println("可以进行增量索引更新，提取数据发送消息");
+            //获取添加返回的id 主键
+            String id =  printColumn(afterColumns);
+            System.out.println(id);
+            rabbitTemplate.convertAndSend("ESExchange","es",id);
+        }
 
         // if (CanalEntry.EventType.INSERT.equals(eventType)) {
         //     System.out.println("新增数据：");

@@ -2,10 +2,15 @@ package com.usian.search.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.usian.common.exception.ExceptionCast;
+import com.usian.model.behavior.pojos.ApBehaviorEntry;
 import com.usian.model.common.dtos.ResponseResult;
 import com.usian.model.common.enums.AppHttpCodeEnum;
 import com.usian.model.search.dtos.UserSearchDto;
+import com.usian.model.user.pojos.ApUser;
+import com.usian.search.feign.BehaviorFeign;
+import com.usian.search.service.ApUserSearchService;
 import com.usian.search.service.ArticleSearchService;
+import com.usian.utils.threadlocal.AppThreadLocalUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.weaver.ast.Var;
 import org.elasticsearch.action.search.SearchRequest;
@@ -43,7 +48,10 @@ import java.util.Map;
 public class ArticleSearchServiceImpl implements ArticleSearchService {
     @Autowired
     private RestHighLevelClient restHighLevelClient;
-
+    @Autowired
+    private ApUserSearchService apUserSearchService;
+    @Autowired
+    private BehaviorFeign behaviorFeign;
     /**
      * App端文章搜索
      * @param dto
@@ -55,6 +63,14 @@ public class ArticleSearchServiceImpl implements ArticleSearchService {
         //检查参数
         if(dto == null || StringUtils.isBlank(dto.getSearchWords())){
             ExceptionCast.cast(1,"参数错误");
+        }
+        //只有在首页查询的时候才会保存
+        if(dto.getFromIndex() == 0){
+            ApBehaviorEntry apBehaviorEntry = getEntry(dto);
+            if(apBehaviorEntry == null){
+               ExceptionCast.cast(1,"无效参数");
+            }
+            apUserSearchService.insert(apBehaviorEntry.getId(),dto.getSearchWords());
         }
         //2.从es索引库中检索数据 //构建请求对象   /app_info_article/doc/_serach
         SearchRequest searchRequest=new SearchRequest("app_info_article").types("doc");
@@ -123,4 +139,13 @@ public class ArticleSearchServiceImpl implements ArticleSearchService {
         list.add(map);
         return ResponseResult.okResult(list);
 }
+    /**
+     * 获取行为实体
+     * @param userSearchDto
+     * @return
+     */
+    private ApBehaviorEntry getEntry(UserSearchDto userSearchDto) {
+        ApUser user = AppThreadLocalUtils.getUser();
+        return behaviorFeign.findByUserIdOrEntryId(user.getId(),userSearchDto.getEquipmentId());
+    }
 }

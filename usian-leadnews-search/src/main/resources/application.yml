@@ -8,6 +8,15 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
         namespace: d0442d84-d7d4-40dc-a3b9-eb46435f39c7
+  rabbitmq:
+    host: 192.168.211.132
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: manual
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.211.132:3306/leadnews_search?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC

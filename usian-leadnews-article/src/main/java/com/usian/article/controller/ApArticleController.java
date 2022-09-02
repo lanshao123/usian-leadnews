@@ -4,10 +4,7 @@ import com.usian.aips.article.ApArticleControllerApi;
 import com.usian.article.service.ApArticleService;
 import com.usian.model.article.pojos.ApArticle;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @program: usian-leadnews
@@ -26,5 +23,11 @@ public class ApArticleController implements ApArticleControllerApi {
     public ApArticle saveArticle(@RequestBody ApArticle apArticle) {
          apArticleService.save(apArticle);
          return apArticle;
+    }
+
+    @Override
+    @GetMapping("/one/{id}")
+    public ApArticle findOne(@PathVariable Long id) {
+        return apArticleService.getById(id);
     }
 }
