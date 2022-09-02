@@ -1,0 +1,17 @@
+server:
+  port: 9106
+spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+  application:
+    name: leadnews-comment
+  cloud:
+    nacos:
+      discovery:
+        namespace: d0442d84-d7d4-40dc-a3b9-eb46435f39c7
+        server-addr: 127.0.0.1:8848
+  data:
+    mongodb:
+      port: 27017
+      host: 127.0.0.1
+      database: leadnews-comment
