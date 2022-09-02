@@ -25,6 +25,7 @@
         <module>usian-leadnews-sms</module>
         <module>usian-leadnews-behavior</module>
         <module>usian-leadnews-comment</module>
+        <module>usian-leadnews-search</module>
     </modules>
 
     <!-- 继承Spring boot工程 -->
